@@ -423,6 +423,7 @@ void OBCameraNodeDriver::resetDeviceThread() {
     std::unique_lock<decltype(reset_device_lock_)> lock(reset_device_lock_);
     reset_device_cv_.wait(lock, [this]() { return !is_alive_ || reset_device_; });
     if (!is_alive_) {
+      ROS_ERROR("resetDeviceThread: device not alive, thread exiting");
       break;
     }
     ROS_INFO_STREAM("resetDeviceThread: device is disconnected, reset device start");
